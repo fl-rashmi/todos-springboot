@@ -23,4 +23,8 @@ public class TodoEntity {
     @NotBlank(message = "Description is required")
     @Size(max = 500, message = "Description cannot exceed 500 characters")
     private String description;
+
+    public String getId() {
+        return id != null ? id.toHexString() : null;
+    }
 }
