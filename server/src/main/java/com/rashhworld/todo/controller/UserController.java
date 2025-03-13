@@ -22,10 +22,10 @@ public class UserController {
     public ResponseEntity<SpringResponse> createUser(@Valid @RequestBody UserEntity data) {
         try {
             userService.registerUser(data);
-            SpringResponse response = new SpringResponse("success", "Successfully registered", null);
+            SpringResponse response = SpringResponse.builder().status("success").message("Registration successful.").build();
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (Exception e) {
-            SpringResponse response = new SpringResponse("error", e.getMessage(), null);
+            SpringResponse response = SpringResponse.builder().status("error").message(e.getMessage()).build();
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
@@ -34,10 +34,10 @@ public class UserController {
     public ResponseEntity<SpringResponse> loginUser(@Valid @RequestBody UserEntity data) {
         try {
             String token = userService.loginUser(data);
-            SpringResponse response = new SpringResponse("success", "Login successfull", token);
+            SpringResponse response = SpringResponse.builder().status("success").message("Login successful.").data(token).build();
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
-            SpringResponse response = new SpringResponse("error", e.getMessage(), null);
+            SpringResponse response = SpringResponse.builder().status("error").message(e.getMessage()).build();
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }

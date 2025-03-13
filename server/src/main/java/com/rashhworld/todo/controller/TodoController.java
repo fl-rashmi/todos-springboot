@@ -22,14 +22,14 @@ public class TodoController {
     @PostMapping
     public ResponseEntity<SpringResponse> createTodo(@RequestBody TodoEntity data) {
         todoService.createTodo(data);
-        SpringResponse response = new SpringResponse("success", "Todo added successfully.", null);
+        SpringResponse response = SpringResponse.builder().status("success").message("Todo added successfully.").build();
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<SpringResponse> getAllTodos() {
         List<TodoEntity> data = todoService.getAllTodos();
-        SpringResponse response = new SpringResponse("success", null, data);
+        SpringResponse response = SpringResponse.builder().status("success").data(data).build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -38,11 +38,11 @@ public class TodoController {
         TodoEntity data = todoService.getSingleTodo(id);
 
         if (data == null) {
-            SpringResponse response = new SpringResponse("error", "Todo not found", null);
+            SpringResponse response = SpringResponse.builder().status("error").message("Todo not found.").build();
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
 
-        SpringResponse response = new SpringResponse("success", null, data);
+        SpringResponse response = SpringResponse.builder().status("success").data(data).build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -51,12 +51,12 @@ public class TodoController {
         TodoEntity data = todoService.getSingleTodo(id);
 
         if (data == null) {
-            SpringResponse response = new SpringResponse("error", "Todo not found", null);
+            SpringResponse response = SpringResponse.builder().status("error").message("Todo not found.").build();
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
 
         todoService.updateTodo(id, newData);
-        SpringResponse response = new SpringResponse("success", "Todo updated successfully", null);
+        SpringResponse response = SpringResponse.builder().status("success").message("Todo updated successfully.").build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -65,12 +65,12 @@ public class TodoController {
         TodoEntity data = todoService.getSingleTodo(id);
 
         if (data == null) {
-            SpringResponse response = new SpringResponse("error", "Todo not found", null);
+            SpringResponse response = SpringResponse.builder().status("error").message("Todo not found.").build();
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
 
         todoService.deleteTodo(id);
-        SpringResponse response = new SpringResponse("success", "Todo deleted successfully", null);
+        SpringResponse response = SpringResponse.builder().status("success").message("Todo deleted successfully.").build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
